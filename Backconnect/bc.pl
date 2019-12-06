@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+# Usage : perl bc.pl [HOST] [PORT]
 use Socket;
 $iaddr=inet_aton($ARGV[0]) || die("Error: $!\n");
 $paddr=sockaddr_in($ARGV[1], $iaddr) || die("Error: $!\n");
